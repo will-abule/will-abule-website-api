@@ -1,0 +1,4 @@
+{
+  "db": "mongodb://localhost/test-personal-website",
+  "env": "test"
+}

@@ -1,0 +1,4 @@
+http:
+  rules:
+    - selector: register.RegisterService.Register
+      post: /register

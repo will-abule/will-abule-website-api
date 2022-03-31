@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package content;
+
+import "shared/query-params.proto";
+
+message Content {
+    optional string _id = 1;
+    optional string title = 2;
+    optional string content = 3;
+    optional string urlLink = 4;
+    repeated string tags = 5;
+    optional int32 position = 6 [default = 1];
+}
+
+message ContentAddRequest {
+    string token = 1;
+    Content data = 2;
+}
+
+message ContentResponse {
+    int32 status = 1;
+    optional string errorMessage = 2;
+    repeated Content data = 3;
+    optional int32 pageNumber = 4;
+    optional int32 pageSize = 5;
+    optional int32 totalPage = 6;
+    optional int32 records = 7;
+}
+
+message ContentSingleRequest {
+    optional string _id = 1;
+}
+
+message ContentSingleResponse {
+    int32 status = 1;
+    Content data = 2;
+    optional string errorMessage = 3 [default = ""];
+    optional string token = 4 [default = ""];
+}
+
+message ContentUpdateRequest {
+    string token = 1;
+    string _id = 2;
+    Content data = 3;
+}
+
+message ContentDeleteRequest {
+    string token = 1;
+    string _id = 2;
+}
+
+service ContentService {
+    rpc GetContents (QueryParamsRequest) returns (ContentResponse);
+    rpc GetSingleContent (ContentSingleRequest) returns (ContentSingleResponse);
+    rpc AddContent(ContentAddRequest) returns (ContentSingleResponse);
+    rpc UpdateContent (ContentUpdateRequest) returns (ContentSingleResponse);
+    rpc DeleteContent (ContentDeleteRequest) returns (ContentSingleResponse);
+}

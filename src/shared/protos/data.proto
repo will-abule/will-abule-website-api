@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package data;
+
+import "shared/query-params.proto";
+
+message Data {
+    optional string _id = 1;
+    optional string contentId = 2;
+    optional string title = 3;
+    optional string content = 4;
+    optional bool publish = 5;
+    optional int32 position = 6;
+}
+
+message DataAddRequest {
+    string token = 1;
+    Data data = 2;
+}
+
+message DataResponse {
+    int32 status = 1;
+    optional string errorMessage = 2;
+    repeated Data data = 3;
+    optional int32 pageNumber = 4;
+    optional int32 pageSize = 5;
+    optional int32 totalPage = 6;
+    optional int32 records = 7;
+}
+
+message DataSingleRequest {
+    optional string _id = 1;
+}
+
+message DataSingleResponse {
+    int32 status = 1;
+    Data data = 2;
+    optional string errorMessage = 3 [default = ""];
+    optional string token = 4 [default = ""];
+}
+
+message DataUpdateRequest {
+    string _id = 1;
+    string token = 2;
+    Data data = 3;
+}
+
+message DataDeleteRequest {
+    string token = 1;
+    string _id = 2;
+}
+
+service DataService {
+    rpc GetAllData (QueryParamsRequest) returns (DataResponse);
+    rpc GetSingleData (DataSingleRequest) returns (DataSingleResponse);
+    rpc AddData (DataAddRequest) returns (DataSingleResponse);
+    rpc UpdateData (DataUpdateRequest) returns (DataSingleResponse);
+    rpc DeleteData (DataDeleteRequest) returns (DataSingleResponse);
+}

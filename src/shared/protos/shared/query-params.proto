@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package queryParams;
+
+message QueryParamsRequest {
+    bool filter = 1;
+    int32 pageNumber = 2;
+    int32 pageSize = 3;
+    string sort = 4;
+    string sortName = 5;
+    optional string searchFilters = 6;
+}

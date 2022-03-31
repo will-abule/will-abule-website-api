@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package url;
+
+import "shared/query-params.proto";
+
+message Data {
+    string _id = 1;
+    string title = 2;
+    string link = 3;
+}
+
+message UrlAddRequest {
+    string token = 1;
+    string title = 2;
+}
+
+message UrlSingleRequest {
+    string _id = 1;
+}
+message UrlResponse {
+    int32 status = 1;
+    optional string errorMessage = 2;
+    repeated Data data = 3;
+    optional int32 pageNumber = 4;
+    optional int32 pageSize = 5;
+    optional int32 totalPage = 6;
+    optional int32 records = 7;
+}
+message UrlSingleResponse {
+    int32 status = 1;
+    optional Data data = 2;
+    optional string errorMessage = 3;
+    optional string token = 4;
+}
+
+message UrlUpdateRequest {
+    string token = 1;
+    string title = 2;
+    string _id = 3;
+}
+
+message UrlDeleteRequest {
+    string token = 1;
+    string _id = 2;
+}
+
+service UrlService {
+    rpc GetUrls (QueryParamsRequest) returns (UrlResponse);
+    rpc GetSingleUrl (UrlSingleRequest) returns (UrlSingleResponse);
+    rpc AddUrl (UrlAddRequest) returns (UrlSingleResponse);
+    rpc UpdateUrl (UrlUpdateRequest) returns (UrlSingleResponse);
+    rpc DeleteUrl (UrlDeleteRequest) returns (UrlSingleResponse);
+}
